@@ -42,10 +42,10 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(1920, 1080);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(960, 540);
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1920, 1080);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(3840, 2160);
+static cocos2d::Size designResolutionSize = cocos2d::Size(1080, 1920);
+static cocos2d::Size smallResolutionSize = cocos2d::Size(540, 960);
+static cocos2d::Size mediumResolutionSize = cocos2d::Size(1080, 1920);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(2160, 3840);
 
 AppDelegate::AppDelegate()
 {
@@ -83,7 +83,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("kuppo_pang", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        glview = GLViewImpl::createWithRect("kuppo_pang", cocos2d::Rect(0, 0, smallResolutionSize.width, smallResolutionSize.height));	// framesize
+		//glview->setFrameZoomFactor(1.0f);
 #else
         glview = GLViewImpl::create("kuppo_pang");
 #endif
@@ -96,9 +97,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
 
-    // Set the design resolution
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
     auto frameSize = glview->getFrameSize();
+	// Set the design resolution
+	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);		// resolution
     // if the frame's height is larger than the height of medium size.
     if (frameSize.height > mediumResolutionSize.height)
     {        
@@ -115,6 +116,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
     }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	director->setContentScaleFactor(1.0f);
+#endif
     register_all_packages();
 
     // create a scene. it's an autorelease object

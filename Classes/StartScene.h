@@ -17,6 +17,8 @@ public:
 
     CREATE_FUNC(StartScene);
 
+	void onClickButton1(Ref *object);
+
 };
 
 
