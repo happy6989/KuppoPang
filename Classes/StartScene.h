@@ -8,6 +8,9 @@
 #include "cocos2d.h"
 
 class StartScene : public cocos2d::Layer{
+	
+public :
+	cocos2d::Menu* menu;
 public:
     static cocos2d::Scene* createScene();
 
@@ -18,6 +21,7 @@ public:
     CREATE_FUNC(StartScene);
 
 	void onClickButton1(Ref *object);
+	void enableStartButton();
 
 };
 

@@ -3,7 +3,7 @@
 //
 
 #include "StartScene.h"
-#include "battleScene.h"
+#include "WorldScene.h"
 
 USING_NS_CC;
 
@@ -53,36 +53,42 @@ bool StartScene::init() {
 	auto title = Sprite::create("titleImg\\title.png");
 
 	//중심점 바꿈
-	title->setAnchorPoint(Point(0.5f,1));
+	title->setAnchorPoint(Point(0.5f,0.5f));
 	// 해당 포인트에 위치시킴. 화면의 정중앙
 
-	title->setPosition(Point(winSize.width / 2, winSize.height / 8*6));
+	title->setPosition(Point(winSize.width / 2, winSize.height / 16*9.5));
+	
+	auto to = title->getScale();
+	auto from = 0;
+
+	title->setScale(from);
+	auto action = ScaleTo::create(1.0f, to);
+	auto sequence = Sequence::create(action, CallFunc::create(CC_CALLBACK_0(StartScene::enableStartButton, this)), NULL);
+	title->runAction(sequence);
 
 	//this 에 title 를 자식 노드로 추가
 	this->addChild(title);
-
-
+	
 	//==시작버튼 올리기
 	//
 	auto sBtn = MenuItemImage::create("titleImg\\startBtn.png", "titleImg\\startBtn_on.png", [&](Ref *sender) {
 		log("onClickButton1");
-		auto Scene = BattleScene::createScene();
+		auto Scene = WorldScene::createScene();
 		Director::getInstance()->pushScene(Scene);
 	});
 
 	//중심바꿈
-	sBtn->setAnchorPoint(Point(0.5f,0));
+	sBtn->setAnchorPoint(Point(0.5f, 0));
 
 	//해당 포인트에 위치시킴. 화면의 정중앙
 
 	sBtn->setPosition(Point(winSize.width / 2, 0));
 
 	//menu 에 버튼 추가
-	auto menu = Menu::create(sBtn, NULL);
+	this->menu = Menu::create(sBtn, NULL);
 	menu->setPosition(Point::ZERO);
 	this->addChild(menu);
-
-
+	menu->setVisible(false);
 
     return true;
 }
@@ -90,4 +96,10 @@ bool StartScene::init() {
 void StartScene::onClickButton1(Ref *object)
 {
 	log("onClickButton1");
+}
+
+void StartScene::enableStartButton()
+{
+	if(menu != NULL)
+		menu->setVisible(true);
 }
