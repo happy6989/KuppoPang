@@ -62,7 +62,7 @@ bool StartScene::init() {
 	auto from = 0;
 
 	title->setScale(from);
-	auto action = ScaleTo::create(1.0f, to);
+	auto action = ScaleTo::create(0.8f, to);
 	auto sequence = Sequence::create(action, CallFunc::create(CC_CALLBACK_0(StartScene::enableStartButton, this)), NULL);
 	title->runAction(sequence);
 

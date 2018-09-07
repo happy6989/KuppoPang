@@ -11,10 +11,19 @@ public:
 
 	CREATE_FUNC(WorldScene); 
 
-	cocos2d::extension::ScrollView* scrollView;
+	cocos2d::Sprite* map;
+	cocos2d::Point sTouch;
+	cocos2d::Point eTouch;
 
-	void scrollViewDidScroll(cocos2d::extension::ScrollView* view);
-	void scrollViewdidZoom(cocos2d::extension::ScrollView* viw);
+	virtual void onEnter();
+	virtual void onExit();
+	virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+	virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+	virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+	virtual void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event);
 
-	
+	//cocos2d::extension::ScrollView* scrollView = NULL;
+
+	//void scrollViewDidScroll(cocos2d::extension::ScrollView* view);
+	//void scrollViewdidZoom(cocos2d::extension::ScrollView* viw);
 };
