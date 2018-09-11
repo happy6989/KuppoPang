@@ -3,7 +3,8 @@
 //
 
 #include "StartScene.h"
-#include "WorldScene.h"
+//#include "WorldScene.h"
+#include "battleScene.h"
 
 USING_NS_CC;
 
@@ -73,7 +74,10 @@ bool StartScene::init() {
 	//
 	auto sBtn = MenuItemImage::create("titleImg\\startBtn.png", "titleImg\\startBtn_on.png", [&](Ref *sender) {
 		log("onClickButton1");
-		auto Scene = WorldScene::createScene();
+		//Scene Change
+		//auto Scene = WorldScene::createScene();
+
+		auto Scene = BattleScene::createScene();
 		Director::getInstance()->pushScene(Scene);
 	});
 
